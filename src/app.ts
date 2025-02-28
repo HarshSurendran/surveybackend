@@ -6,10 +6,14 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const app = express()
+const app = express();
+console.log(process.env.CLIENT_URL)
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true
+}))
 app.use(helmet())
 app.use(morgan('dev'))
 
