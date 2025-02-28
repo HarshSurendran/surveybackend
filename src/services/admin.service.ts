@@ -15,7 +15,7 @@ const login = async (data: IAdmin) => {
     try {
         const checkAdmin = await Admin.findOne({ email: data.email })
         if (!checkAdmin || !data.password) {
-            throw new CustomError("Sorry! Email doesn't exist", 402)
+            throw new CustomError("Sorry! Email not registered.", 401)
         }
         const isMatch = checkAdmin?.password ? await bcrypt.compare(data.password, checkAdmin.password) : false
 
@@ -31,6 +31,7 @@ const login = async (data: IAdmin) => {
         )
         return token
     } catch (error) {
+        console.log(error, "error froma admin service");
         throw error
     }
 }

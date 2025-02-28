@@ -3,11 +3,11 @@ import { ISurvey } from "../models/survey.schema";
 import surveyService from "../services/survey.service"
 import adminService from "../services/admin.service";
 
-const createSurvey = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+const createSurvey = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const surveyData: ISurvey = req.body;
         const response = await surveyService.createSurvey(surveyData);
-        return res.status(200).json({status: true, message:'Survey submission form successfully created',response});
+        res.status(200).json({status: true, message:'Survey submission form successfully created',response});
     } catch (error) {
         next(error);
     }
@@ -26,7 +26,7 @@ const fetchAllSurveys = async (req:Request,res:Response,next:NextFunction) => {
         }
 
         const response = await adminService.getSurveySubmission(params)
-        return res.status(200).json({ status: true, message:'data fetched', data: {surveys:response.surveys, totalDocs: response.totalItems }, })
+        res.status(200).json({ status: true, message:'data fetched', data: {surveys:response.surveys, totalDocs: response.totalItems }, })
     } catch (error) {
         next(error)
     }
